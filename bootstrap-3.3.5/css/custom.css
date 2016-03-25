@@ -1,0 +1,28 @@
+body{
+	background-color: #54C571
+}
+.navbar-default {
+    background-color: transparent;
+	border: 0px;	
+	color: #FFFFFF;
+}
+.container{
+	background-color: white;
+}
+.navbar-header .navbar-brand{
+	color: white;
+}
+  .navbar-default .navbar-nav > li > a {
+   color: white; 
+}
+.btn-primary{
+	background-color: #54C571;
+}
+.btn: focus{
+	background-color: #54C571;
+}
+.panel-primary{
+	text-align: center;
+	background-color: grey;
+	border: 0px;
+}
