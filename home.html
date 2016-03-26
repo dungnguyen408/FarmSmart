@@ -47,64 +47,18 @@
 
 <div class= "panel">
 	<h1 class ="panel panel-primary">
-		Farm Smart
+		FarmSmart
 	</h1>
 </div>
-
-<!-- display the dropdown button -->
-<p> Please select: </p>
-<div class="dropdown">
-  <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Fertilizer
-	<span class="caret"></span></button>
-		<ul class="dropdown-menu">
-			<li><a href="#">Factor A</a></li>
-			<li><a href="#">Factor B</a></li>
-			<li><a href="#">Factor C</a></li>
-		</ul>
-
+<div class = "formgroup">
+<form class="form-inline" role="form">
+  <div class="form-group">
+    <label for="email">Please select: </label>
+    
+  </div>
+</form>
 </div>
 
-<!-- display the graph of our project -->
-<canvas id="canvas"></canvas>
-</div>
-
-</body>
-
-<script type="text/javascript">
-    var lineChartData = {
-    labels: ["Data 1", "Data 2", "Data 3", "Data 4", "Data 5", "Data 6", "Data 7"],
-    datasets: [{
-        fillColor: "rgba(220,220,220,0)",
-        strokeColor: "rgba(220,180,0,1)",
-        pointColor: "rgba(220,180,0,1)",
-        data: [20, 30, 80, 20, 40, 10, 60]
-    }, {
-        fillColor: "rgba(151,187,205,0)",
-        strokeColor: "rgba(151,187,205,1)",
-        pointColor: "rgba(151,187,205,1)",
-        data: [60, 10, 40, 30, 80, 30, 20]
-    }]
-
-}
-
-Chart.defaults.global.animationSteps = 50;
-Chart.defaults.global.tooltipYPadding = 16;
-Chart.defaults.global.tooltipCornerRadius = 0;
-Chart.defaults.global.tooltipTitleFontStyle = "normal";
-Chart.defaults.global.tooltipFillColor = "rgba(0,160,0,0.8)";
-Chart.defaults.global.animationEasing = "easeOutBounce";
-Chart.defaults.global.responsive = true;
-Chart.defaults.global.scaleLineColor = "black";
-Chart.defaults.global.scaleFontSize = 16;
-
-var ctx = document.getElementById("canvas").getContext("2d");
-var LineChartDemo = new Chart(ctx).Line(lineChartData, {
-    pointDotRadius: 10,
-    bezierCurve: false,
-    scaleShowVerticalLines: false,
-    scaleGridLineColor: "black"
-});
-</script>
 </html>
 
 
