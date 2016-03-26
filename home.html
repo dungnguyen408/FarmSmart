@@ -35,29 +35,32 @@
 			<li><a href="home.html"><span class="glyphicon glyphicon-home"></span> Home </a></li>
 		</ul>
 		
-		<!--Create a signup/login on top nav-->
-		<ul class="nav navbar-nav navbar-right">
-        <li><a href="login.html"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-        </ul>
+
 	</div>
 
 </nav>
 <!-- container of the page to display information -->
-<div class="container">
+<div class="container" align = "center">
 
 <div class= "panel">
 	<h1 class ="panel panel-primary">
 		FarmSmart
 	</h1>
 </div>
-<div class = "formgroup">
-<form class="form-inline" role="form">
-  <div class="form-group">
-    <label for="email">Please select: </label>
-    
-  </div>
+
+	<button class= "btn btn-primary btn-block" id ="myButton" button type="button">
+	Login
+	</button>
+
 </form>
 </div>
+</body>
+
+<script type="text/javascript">
+    document.getElementById("myButton").onclick = function () {
+        location.href = "login.html";
+    };
+</script>
 
 </html>
 
