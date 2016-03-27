@@ -1,3 +1,4 @@
+
 body{
 	background-color: #54C571
 }
@@ -6,8 +7,16 @@ body{
 	border: 0px;	
 	color: #FFFFFF;
 }
+
 .container{
 	background-color: white;
+	width: 80%;
+	margin: 20px auto;
+}
+.p{
+	text-align: center;
+	font-size: 14px;
+	padding-top:140px;
 }
 .navbar-header .navbar-brand{
 	color: white;
@@ -16,13 +25,24 @@ body{
    color: white; 
 }
 .btn-primary{
+	padding: 7px;
 	background-color: #54C571;
+	color: white;
+	
 }
-.btn: focus{
+
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active,
+.btn-primary.active,
+.open .dropdown-toggle.btn-primary {
 	background-color: #54C571;
+	color: white;
+	border-color: #285e8e;
 }
 .panel-primary{
 	text-align: center;
-	background-color: grey;
+	background-color: #54C571;
+	color: white;
 	border: 0px;
 }

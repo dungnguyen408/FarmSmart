@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <title>Farm Smart</title>
 <link href="bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-<link href="bootstrap-3.3.5/css/bootstrap.theme.min.css" rel="stylesheet" type="text/css">
+<link href="bootstrap-3.3.5/css/bootstrap.css" rel="stylesheet" type="text/css">
 <link href="bootstrap-3.3.5/css/custom.css" rel="stylesheet" type="text/css">
 <script src="javascript/Chart.min.js"></script>
 <script src="https://requirejs.org/docs/release/2.1.1/minified/require.js"/>
@@ -69,7 +69,7 @@
 </div>
 
 <!-- display the graph of our project -->
-<canvas id="canvas"></canvas>
+<canvas id="canvas" width="600" height ="600"></canvas>
 </div>
 
 </body>
@@ -78,56 +78,56 @@
 	var creationTime = [];
 	var temperature = [];
 	var humidity = [];
+
 	$.getJSON("https://api.aercloud.aeris.com/v1/16074/scls/ClimateDevice/containers/FirstContainer/contentInstances?apiKey=4ebc440a-eafb-11e5-a218-497c8286085a", function(data) {
-    console.log(data);
+
     $("#json").html(data);
 	                //Prepare the Data array with JSON elements with Temperature, Humidity and CreateTime data      
-                    for (var key in data.contentInstances){
+                    for (var key in data.contentInstances)
+					{
                         jsonObject = JSON.parse(data.contentInstances[key].content.contentTypeBinary);
                         jsonObject["creationTime"] = new Date(data.contentInstances[key].creationTime).toLocaleString();
 						creationTime.push(jsonObject["creationTime"]);
 						temperature.push(parseInt(jsonObject["Temperature"]));
 						humidity.push(parseInt(jsonObject["Humidity"]));
 						
-						}
-	console.log(creationTime, temperature, humidity);
-});
+					}
 
+	console.log(creationTime, temperature, humidity);
+
+
+console.log(creationTime);
     var lineChartData = {
 	//labels = time
-    labels : temperature,
+    labels : creationTime,
     datasets: [{
+	    label: "Temperature",
         fillColor: "rgba(220,220,220,0)",
         strokeColor: "rgba(220,180,0,1)",
         pointColor: "rgba(220,180,0,1)",
 		//temperature
         data : temperature
-    }, {
-        fillColor: "rgba(151,187,205,0)",
-        strokeColor: "rgba(151,187,205,1)",
-        pointColor: "rgba(151,187,205,1)",
-		//moisture
-        data : humidity
-    }]
+    
+    },
+        {
+            label: "Humidity",
+            fillColor: "rgba(151,187,205,0.2)",
+            strokeColor: "rgba(151,187,205,1)",
+            pointColor: "rgba(151,187,205,1)",
+            pointStrokeColor: "#fff",
+            pointHighlightFill: "#fff",
+            pointHighlightStroke: "rgba(151,187,205,1)",
+            data: humidity
+        }
+    
+    ]
 
 }
 
-Chart.defaults.global.animationSteps = 50;
-Chart.defaults.global.tooltipYPadding = 16;
-Chart.defaults.global.tooltipCornerRadius = 0;
-Chart.defaults.global.tooltipTitleFontStyle = "normal";
-Chart.defaults.global.tooltipFillColor = "rgba(0,160,0,0.8)";
-Chart.defaults.global.animationEasing = "easeOutBounce";
-Chart.defaults.global.responsive = true;
-Chart.defaults.global.scaleLineColor = "black";
-Chart.defaults.global.scaleFontSize = 16;
+
 
 var ctx = document.getElementById("canvas").getContext("2d");
-var LineChartDemo = new Chart(ctx).Line(lineChartData, {
-    pointDotRadius: 10,
-    bezierCurve: false,
-    scaleShowVerticalLines: false,
-    scaleGridLineColor: "black"
+var canvas = new Chart(ctx).Line(lineChartData);
 });
 </script>
 </html>
