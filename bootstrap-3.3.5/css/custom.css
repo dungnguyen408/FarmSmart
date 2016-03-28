@@ -1,22 +1,58 @@
 
+html{
+
+  background: url(planting.jpg) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+
 body{
-	background-color: #54C571
+	 background: transparent;
 }
 .navbar-default {
     background-color: transparent;
 	border: 0px;	
 	color: #FFFFFF;
 }
-
-.container{
-	background-color: white;
-	width: 80%;
-	margin: 20px auto;
+.navbar {
+   background-color: transparent;
+   background: transparent;
+   border-color: transparent;
 }
+
+.navbar li { color: #000 } 
+.dropdown{
+	display:inline;
+	margin: 10px 0px 0px 10px;
+	padding: 10px
+	
+}
+.container{
+	background-color: rgba(84,197,113,0.5);
+    border-radius:3px;
+	text-align:center;
+
+}
+.graphcontainer{
+	background-color: white;
+	
+	margin: 10px 0px 0px 10px;
+}
+
+#canvas{
+	margin: 50px 10px 50px 10px;
+}
+
 .p{
 	text-align: center;
 	font-size: 14px;
 	padding-top:140px;
+}
+#myButton{
+	margin: 0px 0px 20px 0px;
 }
 .navbar-header .navbar-brand{
 	color: white;
@@ -45,4 +81,15 @@ body{
 	background-color: #54C571;
 	color: white;
 	border: 0px;
+}
+.btn-lg, .btn-lg:hover, .btn-lg:focus, .btn-lg:active{
+	border: 1px white solid;
+	 padding: 18px 28px;
+    font-size: 22px;
+    line-height: normal;
+	background-color: #54C571;
+    -webkit-border-radius: 8px;
+       -moz-border-radius: 8px;
+            border-radius: 8px;
+			width: 50%
 }

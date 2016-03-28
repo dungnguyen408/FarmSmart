@@ -16,10 +16,8 @@
 
 <body>
 
-
-<nav id="navbar" class="navbar navbar-default navbar-inverse navbr-fixed-top" role="navigation">
 <!-- Brand and toggle get grouped for better mobile display -->
-
+<nav id="navbar" class="navbar navbar-default navbar-inverse navbr-fixed-top" role="navigation">
 	<div class="navbar-header">
 		<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbarCollapse">
 			<span class="sr-only">Toggle nav </span>
@@ -34,28 +32,22 @@
 		<ul class="nav navbar-nav">
 			<li><a href="home.html"><span class="glyphicon glyphicon-home"></span> Home </a></li>
 		</ul>
-		
-
 	</div>
 
 </nav>
+
 <!-- container of the page to display information -->
-<div class="container" align = "center">
+<div class="container" align="center" >
+<h1 style="font-size:65px; color: white"> FarmSmart </h1>
 
-<div class= "panel">
-	<h1 class ="panel panel-primary">
-		FarmSmart
-	</h1>
+<!-- The login button-->
+<button id="myButton" class="btn btn-primary btn-lg outline"> Login </button>
 </div>
 
-	<button class= "btn btn-primary btn-block" id ="myButton" button type="button">
-	Login
-	</button>
-
-</form>
-</div>
 </body>
 
+
+<!-- if user clicks login, it'll redirect the user to login page-->
 <script type="text/javascript">
     document.getElementById("myButton").onclick = function () {
         location.href = "login.html";

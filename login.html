@@ -10,6 +10,7 @@
 <script src="https://requirejs.org/docs/release/2.1.1/minified/require.js"/>
 <script src="javascript/getClimateDataFromAercloud.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+ <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 
 
 </style>
@@ -18,9 +19,8 @@
 
 <body>
 
-
-<nav id="navbar" class="navbar navbar-default navbar-inverse navbr-fixed-top" role="navigation">
 <!-- Brand and toggle get grouped for better mobile display -->
+<nav id="navbar" class="navbar navbar-default navbar-inverse navbr-fixed-top" role="navigation">
 
 	<div class="navbar-header">
 		<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbarCollapse">
@@ -42,21 +42,17 @@
 
 </nav>
 <!-- container of the page to display information -->
-<div class="container">
 
-<div class= "panel">
+<div class="container">
 	<h1 class ="panel panel-primary">
 		Farm Smart
 	</h1>
-</div>
-
 <!-- display the dropdown button -->
-
-<div class="dropdown">
-
 <form class="form-inline" role="form">
-  <div class="form-group">
+  <div class="form-group" >
     <label for="email">Please select: </label>
+	
+    <div class="dropdown">
     <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Fertilizer
 	<span class="caret"></span></button>
 		<ul class="dropdown-menu">
@@ -64,15 +60,29 @@
 			<li><a href="#">Factor B</a></li>
 			<li><a href="#">Factor C</a></li>
 		</ul>
+	</div>
+	<div class = "dropdown">
+	<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Time
+	<span class="caret"></span></button>
+		<ul class="dropdown-menu">
+			<li><a href="#">Factor A</a></li>
+			<li><a href="#">Factor B</a></li>
+			<li><a href="#">Factor C</a></li>
+		</ul>
+	</div>
   </div>
+  
 </form>
+<!-- container for graphcontainer -->
+<div class ="graphcontainer">
+<!-- display the graph of our project -->
+<canvas id="canvas" width="1000" height ="500"></canvas>
 </div>
 
-<!-- display the graph of our project -->
-<canvas id="canvas" width="600" height ="600"></canvas>
 </div>
 
 </body>
+
 
 <script type="text/javascript">
 	var creationTime = [];
@@ -82,19 +92,16 @@
 	$.getJSON("https://api.aercloud.aeris.com/v1/16074/scls/ClimateDevice/containers/FirstContainer/contentInstances?apiKey=4ebc440a-eafb-11e5-a218-497c8286085a", function(data) {
 
     $("#json").html(data);
-	                //Prepare the Data array with JSON elements with Temperature, Humidity and CreateTime data      
-                    for (var key in data.contentInstances)
-					{
-                        jsonObject = JSON.parse(data.contentInstances[key].content.contentTypeBinary);
-                        jsonObject["creationTime"] = new Date(data.contentInstances[key].creationTime).toLocaleString();
-						creationTime.push(jsonObject["creationTime"]);
-						temperature.push(parseInt(jsonObject["Temperature"]));
-						humidity.push(parseInt(jsonObject["Humidity"]));
+	    //Prepare the Data array with JSON elements with Temperature, Humidity and CreateTime data      
+        for (var key in data.contentInstances)
+		{
+            jsonObject = JSON.parse(data.contentInstances[key].content.contentTypeBinary);
+            jsonObject["creationTime"] = new Date(data.contentInstances[key].creationTime).toLocaleString();
+			creationTime.push(jsonObject["creationTime"]);
+			temperature.push(parseInt(jsonObject["Temperature"]));
+			humidity.push(parseInt(jsonObject["Humidity"]));
 						
-					}
-
-	console.log(creationTime, temperature, humidity);
-
+		}
 
 console.log(creationTime);
     var lineChartData = {
@@ -114,9 +121,6 @@ console.log(creationTime);
             fillColor: "rgba(151,187,205,0.2)",
             strokeColor: "rgba(151,187,205,1)",
             pointColor: "rgba(151,187,205,1)",
-            pointStrokeColor: "#fff",
-            pointHighlightFill: "#fff",
-            pointHighlightStroke: "rgba(151,187,205,1)",
             data: humidity
         }
     
@@ -128,7 +132,10 @@ console.log(creationTime);
 
 var ctx = document.getElementById("canvas").getContext("2d");
 var canvas = new Chart(ctx).Line(lineChartData);
+
 });
+
+
 </script>
 </html>
 
