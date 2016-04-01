@@ -88,27 +88,27 @@
 	var activity = [];
 	var activityType = [];
 
- 
- // Make sure it is public or set to Anyone with link can view 
- var url = "https://spreadsheets.google.com/feeds/cells/1d-lTau3yB6_VntOAowndY-d7nhmyp_7SDdiXou_W8jg/omuqh0k/public/values?alt=json";
- 
- $.getJSON(url, function(data) {
- 
-  var entry = data.feed.entry;
- 
-  $(entry).each(function(){
-    // Column are TimeStamp, Date, Activity.
-    data = this.gs$cell;
-    if ( data.row > '1' && data.col == '2' ){
-    	creationTime.push(new Date(data.$t).toLocaleString());
-    }
-    if ( data.row > '1' && data.col == '3' ){
-    	activity.push(100);
-    	activityType.push(data.$t);
-    }
-  });
- 	console.log( creationTime, activity);
- });
+	// Get Data from Activity Form 
+	var url = "https://spreadsheets.google.com/feeds/cells/1d-lTau3yB6_VntOAowndY-d7nhmyp_7SDdiXou_W8jg/omuqh0k/public/values?alt=json";
+	 
+	$.getJSON(url, function(data) {
+	
+		var entry = data.feed.entry;
+		 
+		$(entry).each(function(){
+		    // Column are TimeStamp, Date, Activity.
+		    data = this.gs$cell;
+		    if ( data.row > '1' && data.col == '2' ){
+		    	creationTime.push(new Date(data.$t).toLocaleString());
+		    	humidity.push (80);
+		    	temperature.push(69);
+		    }
+		    if ( data.row > '1' && data.col == '3' ){
+		    	activity.push(100);
+		    	activityType.push(data.$t);
+		    }
+		});
+	});
 
 	$.getJSON("https://api.aercloud.aeris.com/v1/16074/scls/ClimateDevice/containers/FirstContainer/contentInstances?apiKey=4ebc440a-eafb-11e5-a218-497c8286085a", function(data) {
 
@@ -119,12 +119,34 @@
             jsonObject = JSON.parse(data.contentInstances[key].content.contentTypeBinary);
             jsonObject["creationTime"] = new Date(data.contentInstances[key].creationTime).toLocaleString();
 			creationTime.push(jsonObject["creationTime"]);
+			activity.push(0);
 			temperature.push(parseInt(jsonObject["Temperature"]));
 			humidity.push(parseInt(jsonObject["Humidity"]));
 						
 		}
+		
+
+	//sort by Time
+	var list = [];
+	for (var j in creationTime) 
+    	list.push({'ctime': creationTime[j], 'activity': activity[j], 'temperature': temperature[j], 'humidity':humidity[j] });
+
+
+	list.sort(function(a, b) {
+    	 return new Date(a.ctime) - new Date(b.ctime);
+	});
+
+	for (var k = 0; k < list.length; k++) {
+    	creationTime[k] = list[k].ctime;
+    	activity[k] = list[k].activity;
+    	temperature[k] = list[k].temperature;
+    	humidity[k] = list[k].humidity;
+ 
+	}
 
 	console.log(creationTime, activity, temperature, humidity);
+
+	
 
 	var barChartData = {
 
@@ -172,20 +194,6 @@
     var ctx = document.getElementById("canvas").getContext("2d");
     var canvas = new Chart(ctx, {
         type: 'bar',
-        onAnimationComplete: function () {
-                
-                var x = this.chart.ctx;
-                x.font = this.scale.font;
-                x.fillStyle = this.scale.textColor
-                x.textAlign = "center";
-                x.textBaseline = "bottom";
-                var i = 0;
-                this.datasets.forEach(function (dataset) {
-                    dataset.bars.forEach(function (bar) {
-                        x.fillText(activityType[i++]);
-                    });
-                })
-            },
         data: barChartData,
         options: {
         	
@@ -205,6 +213,9 @@
             		gridLines: {
                 		display: false
             		},
+            		labels: {
+                		show:true,
+                	}
             		
         		}],
         		yAxes: [{
