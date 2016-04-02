@@ -83,10 +83,10 @@
 
 <script type="text/javascript">
 	var creationTime = [];
+	var chartLabels = [];
 	var temperature = [];
 	var humidity = [];
 	var activity = [];
-	var activityType = [];
 
 	// Get Data from Activity Form 
 	var url = "https://spreadsheets.google.com/feeds/cells/1d-lTau3yB6_VntOAowndY-d7nhmyp_7SDdiXou_W8jg/omuqh0k/public/values?alt=json";
@@ -102,10 +102,12 @@
 		    	creationTime.push(new Date(data.$t).toLocaleString());
 		    	humidity.push (80);
 		    	temperature.push(69);
+
 		    }
 		    if ( data.row > '1' && data.col == '3' ){
 		    	activity.push(100);
-		    	activityType.push(data.$t);
+		    	chartLabels.push(data.$t);
+		    	
 		    }
 		});
 	});
@@ -119,6 +121,7 @@
             jsonObject = JSON.parse(data.contentInstances[key].content.contentTypeBinary);
             jsonObject["creationTime"] = new Date(data.contentInstances[key].creationTime).toLocaleString();
 			creationTime.push(jsonObject["creationTime"]);
+			chartLabels.push(jsonObject["creationTime"]);
 			activity.push(0);
 			temperature.push(parseInt(jsonObject["Temperature"]));
 			humidity.push(parseInt(jsonObject["Humidity"]));
@@ -129,11 +132,11 @@
 	//sort by Time
 	var list = [];
 	for (var j in creationTime) 
-    	list.push({'ctime': creationTime[j], 'activity': activity[j], 'temperature': temperature[j], 'humidity':humidity[j] });
+    	list.push({'ctime': creationTime[j], 'activity': activity[j], 'temperature': temperature[j], 'humidity':humidity[j] , 'chartLabels' : chartLabels[j]});
 
 
 	list.sort(function(a, b) {
-    	 return new Date(a.ctime) - new Date(b.ctime);
+    	 return ((new Date(a.ctime) < new Date(b.ctime)) ? -1 : ((new Date(a.ctime) == new Date(b.ctime)) ? 0 : 1));
 	});
 
 	for (var k = 0; k < list.length; k++) {
@@ -141,16 +144,17 @@
     	activity[k] = list[k].activity;
     	temperature[k] = list[k].temperature;
     	humidity[k] = list[k].humidity;
+    	chartLabels[k] = list[k].chartLabels;
  
 	}
 
-	console.log(creationTime, activity, temperature, humidity);
+	console.log(creationTime, chartLabels, activity, temperature, humidity);
 
 	
 
 	var barChartData = {
 
-		labels : creationTime,
+		labels : chartLabels,
 	    datasets: [
 	    	{
 	   			type: 'bar',
